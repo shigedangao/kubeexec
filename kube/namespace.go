@@ -6,6 +6,7 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// List the namespace and return the name of the namespaces
 func (c *Client) ListNamespaces() ([]string, error) {
 	ctx := context.Background()
 	namespaces, err := c.clientset.CoreV1().Namespaces().List(ctx, v1.ListOptions{})

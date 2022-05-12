@@ -1,0 +1,39 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  linux:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: build the project
+        run: go build -ldflags "-s -w"
+      - name: zip
+        run: zip -j kubeexec-linux.zip kubeexec
+      - uses: actions/upload-artifact@v3
+        with:
+          name: kubeforward-linux.zip
+          path: kubeforward-linux.zip
+
+  # note does not support arm yet
+  osx:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: build the project
+        run: go build -ldflags "-s -w"
+      - name: zip
+        run: zip -j kubeexec-osx.zip kubeexec
+      - uses: actions/download-artifact@v3
+        with:
+          name: kubeexec-linux.zip
+      - uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            kubeexec-linux.zip
+            kubeexec-osx.zip

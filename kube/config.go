@@ -6,14 +6,17 @@ import (
 
 	"k8s.io/client-go/kubernetes"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/util/homedir"
 )
 
 type Client struct {
-	clientset *kubernetes.Clientset
+	clientset    *kubernetes.Clientset
+	clientconfig *rest.Config
 }
 
+// Get the kubeconfig location
 func GetKubeConfigLocalPath() string {
 	kubeconfig_path := flag.String(
 		"kubeconfig",
@@ -50,6 +53,7 @@ func GetKubeConfigCtx(kubeconfig_path string) []string {
 	return kubeconfig_ctx
 }
 
+// Create a kubernetes client wrapper from the selected kubeconfig context
 func CreateConfigFromCustomContext(ctx string, kubeconfig_path string) (Client, error) {
 	// load the kubeconfig
 	config := clientcmd.NewNonInteractiveDeferredLoadingClientConfig(
@@ -70,6 +74,7 @@ func CreateConfigFromCustomContext(ctx string, kubeconfig_path string) (Client, 
 	}
 
 	return Client{
-		clientset: clientset,
+		clientset:    clientset,
+		clientconfig: client_config,
 	}, nil
 }

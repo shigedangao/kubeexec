@@ -6,6 +6,7 @@ import (
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// List the pod's name available within a namespace
 func (c *Client) ListPodForNamespace(namespace string) ([]string, error) {
 	ctx := context.Background()
 	pods, err := c.clientset.CoreV1().Pods(namespace).List(ctx, v1.ListOptions{})
