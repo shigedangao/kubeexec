@@ -16,8 +16,8 @@ jobs:
         run: zip -j kubeexec-linux.zip kubeexec
       - uses: actions/upload-artifact@v3
         with:
-          name: kubeforward-linux.zip
-          path: kubeforward-linux.zip
+          name: kubeexec-linux.zip
+          path: kubeexec-linux.zip
 
   # note does not support arm yet
   osx:
