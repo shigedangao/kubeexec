@@ -13,7 +13,7 @@ jobs:
       - name: build the project
         run: go build -ldflags "-s -w"
       - name: zip
-        run: zip -j kubeexec-linux.zip kubeexec
+        run: zip -j kubeexec-linux.zip ./kubeexec
       - uses: actions/upload-artifact@v3
         with:
           name: kubeexec-linux.zip
@@ -27,7 +27,7 @@ jobs:
       - name: build the project
         run: go build -ldflags "-s -w"
       - name: zip
-        run: zip -j kubeexec-osx.zip kubeexec
+        run: zip -j kubeexec-osx.zip ./kubeexec
       - uses: actions/download-artifact@v3
         with:
           name: kubeexec-linux.zip
